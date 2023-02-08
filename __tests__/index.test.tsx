@@ -4,10 +4,10 @@ import '@testing-library/jest-dom';
 
 describe('Home', () => {
 	it('Renders all sections each with list of event names and pictures', async () => {
-		const sectionsWithEvents = [
+		const populatedSections = [
 			{
-				display_name: 'Featured',
-				events: [
+				section: 'Featured',
+				data: [
 					{
 						name: 'Event 1',
 						image_url:
@@ -21,8 +21,8 @@ describe('Home', () => {
 				],
 			},
 			{
-				display_name: 'Today',
-				events: [
+				section: 'Today',
+				data: [
 					{
 						name: 'Event 3',
 						image_url:
@@ -37,14 +37,14 @@ describe('Home', () => {
 			},
 		];
 		const { getByText, getByAltText } = render(
-			<Home sectionsWithEvents={sectionsWithEvents} />
+			<Home populatedSections={populatedSections} />
 		);
 
-		sectionsWithEvents.forEach(section => {
-			const sectionTitle = getByText(section.display_name);
+		populatedSections.forEach(section => {
+			const sectionTitle = getByText(section.section);
 			expect(sectionTitle).toBeInTheDocument();
 
-			section.events.forEach(event => {
+			section.data.forEach(event => {
 				const eventName = getByText(event.name);
 				expect(eventName).toBeInTheDocument();
 				const eventImage = getByAltText(event.name);
